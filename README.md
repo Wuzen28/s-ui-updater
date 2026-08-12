@@ -5,7 +5,7 @@ s-ui 一键安装/更新/端口转发工具
 ```bash
 wget -N https://raw.githubusercontent.com/Wuzen28/s-ui-updater/main/s-ui-updater.sh && bash s-ui-updater.sh
 ```
-# 🚀 s-ui 节点与 Cloudflare 配置指南
+# s-ui 节点与 Cloudflare 配置指南
 
 本脚本支持多种协议共存部署。为了确保连接成功，请根据你使用的协议类型参考以下配置说明。
 
@@ -51,7 +51,7 @@ wget -N https://raw.githubusercontent.com/Wuzen28/s-ui-updater/main/s-ui-updater
 
 ---
 
-### 💡 核心要点总结 (必读)
+### 核心要点总结
 
 - **协议共存**：在同一 VPS 上，Reality (TCP:443) 与 Hysteria2 (UDP:443) 可以共存，因为协议类型不同。
 - **Origin Rules 优势**：使用端口重写后，客户端统一用 `443` 连接，服务端用 `8080`，隐蔽性更高。
@@ -59,3 +59,14 @@ wget -N https://raw.githubusercontent.com/Wuzen28/s-ui-updater/main/s-ui-updater
   ```bash
   # 安装或调出菜单
   s-ui-updater
+
+### 进阶技巧：流媒体与 AI 解锁 (Gemini/Netflix)
+
+如果你的 VPS 线路较差导致无法使用 Gemini 或 Netflix，建议配合 **Cloudflare WARP** 进行分流解锁：
+
+1. **安装 WARP**：在 VPS 执行 `bash <(curl -fsSL https://raw.githubusercontent.com/P3TERX/warp.sh/main/warp.sh) proxy` 开启本地 1080 端口代理。
+2. **s-ui 分流设置**：
+   - **Outbound (出站)**：添加一个 Socks5 协议，指向 `127.0.0.1:1080`，标签设为 `WARP`。
+   - **Routing (路由)**：添加规则，将 `geosite:netflix`、`google.com` (Gemini) 等域名的出站指向 `WARP` 标签。
+3. **效果**：普通流量直连保证速度，解锁流量走 WARP 绕过检测。
+
