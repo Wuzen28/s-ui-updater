@@ -180,7 +180,7 @@ show_menu() {
     fi
     
     clear
-    echo -e "${GREEN}s-ui 自动化管理工具 (专家版)${PLAIN}"
+    echo -e "${GREEN}s-ui 自动化管理工具${PLAIN}"
     echo -e "本地版本: ${YELLOW}$(get_local_version)${PLAIN}"
     echo "------------------------"
     echo "1. 安装 / 检查更新 s-ui"
